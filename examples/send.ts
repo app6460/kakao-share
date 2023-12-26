@@ -4,6 +4,7 @@ async function main() {
     const client = await ShareClient.create({
         appKey: 'your app key',
         originHost: 'your origin host registered in kakaoDevelopers',
+        cookie: {}, // cookie ket-value pair or parsed tough-cookie JSON object
     });
 
     await client.sendCustom('room name', {
