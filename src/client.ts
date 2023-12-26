@@ -10,7 +10,7 @@ import { IShareTemplate } from './template/index';
 export interface IClientConfig extends Partial<AllConfig> {
     appKey: string;
     originHost: string;
-    cookie?: Record<string, string> | CookieJar;
+    cookie?: Record<string, string>;
 }
 
 export class ShareClient {
@@ -18,13 +18,11 @@ export class ShareClient {
     private config: IClientConfig;
     private cookieJar: CookieJar;
     private client: AxiosInstance;
-    readonly isLogin: boolean;
 
     private constructor(config: IClientConfig) {
         this.config = config;
-
-        if (config.cookie instanceof CookieJar) {
-            this.cookieJar = config.cookie;
+        if (Array.isArray(config.cookie?.cookies)) {
+            this.cookieJar = CookieJar.fromJSON(JSON.stringify(config.cookie ?? {}));
         } else {
             this.cookieJar = new CookieJar();
             Object.entries(config.cookie ?? {}).forEach(([key, value]) => {
@@ -50,6 +48,10 @@ export class ShareClient {
         this.client.interceptors.response.use((response) => {
             if (response.headers['Content-Type'] === 'text/html') {
                 this.referer = response.request.res.responseUrl;
+            }
+
+            if (new URL(response.request.res.responseUrl).hostname === 'accounts.kakao.com') {
+                throw new Error('client is not logged in. please pass cookie.');
             }
 
             if (response.status !== 200 && response.status !== 302) {
