@@ -1,4 +1,4 @@
-import { ShareClient } from '../src';
+import { ShareClient } from 'kakao-share';
 
 async function main() {
     const client = await ShareClient.create({
