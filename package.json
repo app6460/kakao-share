@@ -1,6 +1,6 @@
 {
   "name": "kakao-share",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "An unofficial Kakao Share library",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
