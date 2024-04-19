@@ -62,7 +62,7 @@ export class ShareClient {
         });
     }
 
-    public static create(config: IClientConfig): Promise<ShareClient> {
+    public static create(config: IClientConfig) {
         return new ShareClient({
             ...DefaultConfig,
             ...config,
