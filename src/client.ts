@@ -10,7 +10,7 @@ import { IShareTemplate } from './template/index';
 export interface IClientConfig extends Partial<AllConfig> {
     appKey: string;
     originHost: string;
-    cookie?: Record<string, string>;
+    cookie?: Record<string, string> | CookieJar.Serialized;
 }
 
 export class ShareClient {
